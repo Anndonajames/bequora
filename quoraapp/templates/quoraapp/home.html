@@ -1,0 +1,17 @@
+{% extends 'quoraapp/base.html' %}
+{% block content %}
+<h2 style="font-size: 24px; margin-bottom: 20px;">All Questions</h2>
+<a href="{% url 'ask' %}" style="display: inline-block; margin-bottom: 20px; color: #2e69ff; text-decoration: none;">+ Ask a Question</a>
+
+{% if questions %}
+    {% for question in questions %}
+        <div class="card">
+            <a href="{% url 'question_detail' question.id %}" style="font-size: 18px; font-weight: 500; color: #282828; text-decoration: none;">
+                {{ question.title }}
+            </a>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No questions posted yet.</p>
+{% endif %}
+{% endblock %}

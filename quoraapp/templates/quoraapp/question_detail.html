@@ -1,0 +1,58 @@
+{% extends 'quoraapp/base.html' %}
+{% block content %}
+
+<div class="card" style="margin-bottom: 30px;">
+    <h2 style="font-size: 24px; margin-bottom: 10px;">{{ question.title }}</h2>
+    <p style="font-size: 16px; line-height: 1.6;">{{ question.body }}</p>
+    <p style="font-size: 14px; color: #666;">
+        <strong>Asked by:</strong> {{ question.author.username }} |
+        <strong>On:</strong> {{ question.created_at|date:"F j, Y, g:i a" }}
+    </p>
+</div>
+
+<div style="margin-bottom: 30px;">
+    <h3 style="font-size: 20px; margin-bottom: 15px;">Answers</h3>
+    {% if answers %}
+        {% for answer in answers %}
+            <div class="card" style="margin-bottom: 20px;">
+                <p style="font-size: 16px;">{{ answer.body }}</p>
+                <p style="font-size: 14px; color: #555;">
+                    By {{ answer.author.username }} |
+                    {{ answer.created_at|date:"F j, Y, g:i a" }}
+                </p>
+                <p style="font-size: 14px;">
+                    Likes: {{ answer.likes.count }}
+                    {% if user.is_authenticated and user not in answer.likes.all %}
+                        • <a href="{% url 'like_answer' answer.id %}" style="color: #2e69ff; text-decoration: none;">Like</a>
+                    {% endif %}
+                </p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No answers yet.</p>
+    {% endif %}
+</div>
+
+<div class="card" style="max-width: 600px; margin: 0 auto 30px;">
+    <h3 style="font-size: 20px; margin-bottom: 15px;">Submit an Answer</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" style="
+            width: 100%;
+            padding: 10px;
+            background-color: #2e69ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        ">Submit Answer</button>
+    </form>
+</div>
+
+<p style="text-align: center;">
+    <a href="{% url 'home' %}" style="color: #2e69ff; text-decoration: none;">← Back to Questions</a>
+</p>
+
+{% endblock %}

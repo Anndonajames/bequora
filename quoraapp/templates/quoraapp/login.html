@@ -1,0 +1,47 @@
+{% extends 'quoraapp/base.html' %}
+{% block content %}
+<div class="card" style="
+    max-width: 400px;
+    margin: 60px auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    background-color: #fff;
+">
+
+    <h2 style="margin-bottom: 25px; font-size: 26px; text-align: center; color: #333;">Login to Your Account</h2>
+
+    <form method="post" style="display: flex; flex-direction: column; gap: 18px;">
+        {% csrf_token %}
+        {% for field in form %}
+            <div style="display: flex; flex-direction: column;">
+                <label for="{{ field.id_for_label }}" style="margin-bottom: 6px; font-weight: 500; color: #444;">
+                    {{ field.label }}
+                </label>
+                {{ field }}
+                {% for error in field.errors %}
+                    <small style="color: red;">{{ error }}</small>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <button type="submit" style="
+            width: 100%;
+            padding: 12px;
+            background-color: #2e69ff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        ">Login</button>
+    </form>
+
+    <p style="margin-top: 20px; text-align: center; font-size: 14px; color: #555;">
+        Don't have an account?
+        <a href="{% url 'register' %}" style="color: #2e69ff; text-decoration: none; font-weight: 500;">Register</a>
+    </p>
+</div>
+{% endblock %}

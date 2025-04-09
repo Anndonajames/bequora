@@ -1,0 +1,26 @@
+{% extends 'quoraapp/base.html' %}
+{% block content %}
+<div class="card" style="max-width: 600px; margin: 0 auto;">
+    <h2 style="font-size: 24px; margin-bottom: 20px;">Ask a Question</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" style="
+            width: 100%;
+            padding: 10px;
+            background-color: #2e69ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        ">Post Question</button>
+    </form>
+
+    <p style="margin-top: 20px; text-align: center;">
+        <a href="{% url 'home' %}" style="color: #2e69ff; text-decoration: none;">← Back to Questions</a>
+    </p>
+</div>
+{% endblock %}
